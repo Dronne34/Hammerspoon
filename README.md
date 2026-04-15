@@ -50,7 +50,7 @@ Apoi în Hammerspoon: `Reload Config`.
 - `9`: toggle dark mode
 - `8`: mic mute/unmute
 - `Return`: lock screen
-- `Backspace`: pornește screensaver
+- `Delete` (Backspace): pornește screensaver
 - `P`: highlight cursor
 - `/`: show all hotkeys
 - `` ` ``: open Hammerspoon Console
