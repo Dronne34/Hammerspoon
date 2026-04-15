@@ -8,6 +8,13 @@ local function setCaffeineDisplay(state)
   end
 end
 
+local function bindSafe(mods, key, fn)
+  local ok, err = pcall(hs.hotkey.bind, mods, key, fn)
+  if not ok then
+    hs.printf("[system.lua] hotkey bind failed for key '%s': %s", key, tostring(err))
+  end
+end
+
 local function toggleCaffeine()
   local state = hs.caffeinate.get("displayIdle")
   hs.caffeinate.set("displayIdle", not state, true)
@@ -37,15 +44,15 @@ function M.bind(cfg)
     caffeine:setClickCallback(toggleCaffeine)
   end
 
-  hs.hotkey.bind(hyper, "0", toggleCaffeine)
-  hs.hotkey.bind(hyper, "9", toggleDarkMode)
-  hs.hotkey.bind(hyper, "8", toggleMuteInput)
-
-  hs.hotkey.bind(hyper, "Return", function()
+  bindSafe(hyper, "0", toggleCaffeine)
+  bindSafe(hyper, "9", toggleDarkMode)
+  bindSafe(hyper, "8", toggleMuteInput)
+  bindSafe(hyper, "return", function()
     hs.caffeinate.lockScreen()
   end)
 
-  hs.hotkey.bind(hyper, "Backspace", function()
+  -- On macOS/Hammerspoon, physical Backspace key is named "delete".
+  bindSafe(hyper, "delete", function()
     hs.caffeinate.startScreensaver()
   end)
 end
